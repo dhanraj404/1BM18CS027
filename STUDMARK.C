@@ -1,17 +1,34 @@
 #include <stdio.h>
 struct student
 {
-int s1,s2,s3;
-}s;
-void main()
+    char name[50];
+    int roll;
+    float marks[3];
+} s;
+int main()
 {
-    clrscr();
-    fflush(stdin);
-    printf("Enter Marks of all 3 subjects :");
-    scanf("%d,%d,%d",&s.s1,&s.s2,&s.s3);
-    printf(" SUB 1 Marks: %d \n",s.s1);
-    printf(" SUB 2 Marks: %d \n",s.s2);
-    printf(" SUB 3 Marks: %d \n",s.s3);
-    getch();
+    int i;
+    printf("Enter information of students:\n");
+    // storing information
+    printf("\nEnter roll number :\n");
+    scanf("%d",&s.roll);
+    printf("Enter name: ");
+    scanf("%s",s.name);
+    for(i=0; i<3;i++)
+    {
+        printf("Enter marks of subject %d: ",i+1);
+        scanf("%f",&s.marks[i]);
+        printf("\n");
+    }
+    printf("Displaying Information:\n\n");
+    // displaying information
+        printf("\nRoll number: %d\n",s.roll);
+        printf("Name: %s \n",s.name);
 
+    for(i=0; i<3; i++)
+    {
+        printf("Marks of sub %d : %.1f",i+1,s.marks[i]);
+        printf("\n");
+    }
+    return 0;
 }

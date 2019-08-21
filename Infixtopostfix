@@ -1,108 +1,66 @@
-
 #include<stdio.h>
-#include<string.h>
 #include<ctype.h>
-void push(char ele,char s[100],int *t);
-char pop(char s[100],int *t);
-int is_operator(char e);
-int precedence(char e);
-int main()
+void push(char c,int *t,char s[20]);
+char pop(int *t,char s[20]);
+void main()
 {
-	char stack[100],infix[100],postfix[100],x;
-	int i=0,j=0,top=-1;
-	printf("enter infix exp\n");
-	scanf("%s",infix);
-	while(infix[i]!='\0')
+	char stack[20];
+	int top = -1;
+	char exp[20];
+	char *e, x;
+	int check=0;
+	printf("Enter the expression :: ");
+	scanf("%s",exp);
+	e = exp;
+	printf("Postfix expression:: ");
+    	while(*e != '\0')
 	{
-		if(infix[i]=='(')
-		{
-			push(infix[i],stack,&top);
-		}
-		else if(infix[i]==')')
-		{
-			x=pop(stack,&top);
-			while(x!='(')
-			{
-				postfix[j]=x;
-				j++;
-				x=pop(stack,&top);
-			}
-
-		}
-		else if(isdigit(infix[i])||isalpha(infix[i]))
-		{
-			postfix[j]=infix[i];
-			j++;
-		}
-		else if(is_operator(infix[i]==1))
-		{
-
-		    while(is_operator(x)==1&&precedence(x)>=precedence(infix[i]))
-				{
-					postfix[j]=x;
-					j++;
-					x=pop(stack,&top);
-                }
-				push(infix[i],stack,&top);
-
-		}
+		check=isalnum(*e);
+        	if(check==1)
+            		printf("%c",*e);
+        	else if(*e == '(')
+			push(*e,&top,stack);
+		else if(*e == ')')
+        	{
+			while((x = pop(&top,stack)) != '(')
+                		printf("%c", x);
+        	}
 		else
 		{
-			printf("Invalid input\n");
-		}
-		i++;
-    }
-
-		while(top!=-1)
-		{
-				x=pop(stack,&top);
-				postfix[j]=x;
-				j++;
-        }
-
-		postfix[j]='\0';
-		printf("enter postfix exp\n");
-		puts(postfix);
-		return 0;
+            		while(priority(stack[top]) >= priority(*e))
+				printf("%c",pop(&top,stack));
+			push(*e,&top,stack);
+        	}
+        	e++;
+    	}
+    	while(top != -1)
+    	{
+		printf("%c",pop(&top,stack));
+    	}
+	printf("\n");
 }
-void push(char ele,char s[100],int *t)
+void push(char c,int *t,char s[20])
 {
-	if(*t<99)
+	if(*t==19)
 	{
-	    *t=*t+1;
-		s[*t]=ele;
+		printf("Stack Overflow");
+		return;
 	}
-
+	s[++(*t)] = c;
 }
-char pop(char s[100],int *t)
+char pop(int *t,char s[20])
 {
-	char item;
-	if(*t>-1)
-	{
-		item=s[*t];
-		*t=*t-1;
-		return item;
-	}
-}
-int is_operator(char e)
-{
-	if(e=='*'||e=='/'||e=='+'||e=='-')
-	{
-		return 1;
-	}
+	if((*t) == -1)
+		return -1;
 	else
-	{
-		return 0;
-	}
+		return s[(*t)--];
 }
-int precedence(char e)
+int priority(char x)
 {
-	if(e=='^')
-		return 3;
-	else if(e=='*'||e=='/')
+	if(x == '(')
+		return 0;
+	if(x == '+' || x == '-')
+		return 1;
+	if(x == '*' || x == '/')
 		return 2;
-	else if(e=='+'||e=='-')
-		return 1;
-	else
-		return 0;
 }

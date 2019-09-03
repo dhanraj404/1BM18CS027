@@ -126,3 +126,56 @@ int main()
     }
     return 0;
 }
+/*
+bmsce@bmsce-Precision-T1700:~/1BM18CS027$ gcc Qcircle.c
+bmsce@bmsce-Precision-T1700:~/1BM18CS027$ ./a.out
+1.Insert
+2.Deletion
+3.Display
+4.Exit
+Enter option:
+1
+Enter no of elements to be inserted:
+5
+Enter the elements:1
+2
+3
+4
+5
+Elements in queue are:
+1
+2
+3
+4
+5
+1.Insert
+2.Deletion
+3.Display
+4.Exit
+Enter option:
+1
+Enter no of elements to be inserted:
+1
+Enter the elements:6
+Queue Overflow. . .
+Elements in queue are:
+1
+2
+3
+4
+5
+1.Insert
+2.Deletion
+3.Display
+4.Exit
+Enter option:
+2
+Enter no. of elements to be deleted
+3
+The deleted element is : 1
+The deleted element is : 2
+The deleted element is : 3
+Elements in queue are:
+4
+5
+*/

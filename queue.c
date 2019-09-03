@@ -87,3 +87,44 @@ int main()
     }
     return 0;
 }
+/*
+bmsce@bmsce-Precision-T1700:~/1BM18CS027$ gcc Queue.c
+bmsce@bmsce-Precision-T1700:~/1BM18CS027$ ./a.out
+1.Insert
+2.Deletion
+3.Display
+4.Exit
+Enter option:
+1
+Enter no of elements to be inserted:
+2
+Enter the elements:1
+2
+Elements in queue are:
+1
+2
+1.Insert
+2.Deletion
+3.Display
+4.Exit
+Enter option:
+2
+Enter no of elements to be deleted
+2
+The deleted element is : 1
+The deleted element is : 2
+Queue is empty.
+1.Insert
+2.Deletion
+3.Display
+4.Exit
+Enter option:
+3
+Queue is empty.
+1.Insert
+2.Deletion
+3.Display
+4.Exit
+Enter option:
+4
+*/

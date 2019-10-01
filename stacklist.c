@@ -1,179 +1,92 @@
+//Stack implementaion using Linklist
+#include <stdio.h>
 #include <stdlib.h>
 
 struct node
 {
-    int info;
-    struct node *ptr;
-}*top,*top1,*temp;
+    int data;
+    struct node *next;
+};
 
-int topelement();
-void push(int data);
-void pop();
-void empty();
-void display();
-void destroy();
-void stack_count();
-void create();
+typedef struct node* Node;
 
-int count = 0;
-
-void main()
-{
-    int no, ch, e;
-
-    printf("\n 1 - Push");
-    printf("\n 2 - Pop");
-    printf("\n 3 - Top");
-    printf("\n 4 - Empty");
-    printf("\n 5 - Exit");
-    printf("\n 6 - Dipslay");
-    printf("\n 7 - Stack Count");
-    printf("\n 8 - Destroy stack");
-
-    create();
-
-    while (1)
-    {
-        printf("\n Enter choice : ");
-        scanf("%d", &ch);
-
-        switch (ch)
-        {
-        case 1:
-            printf("Enter data : ");
-            scanf("%d", &no);
-            push(no);
-            break;
-        case 2:
-            pop();
-            break;
-        case 3:
-            if (top == NULL)
-                printf("No elements in stack");
-            else
-            {
-                e = topelement();
-                printf("\n Top element : %d", e);
-            }
-            break;
-        case 4:
-            empty();
-            break;
-        case 5:
-            exit(0);
-        case 6:
-            display();
-            break;
-        case 7:
-            stack_count();
-            break;
-        case 8:
-            destroy();
-            break;
-        default :
-            printf(" Wrong choice, Please enter correct choice  ");
-            break;
-        }
-    }
-}
-
-/* Create empty stack */
-void create()
-{
-    top = NULL;
-}
-
-/* Count stack elements */
-void stack_count()
-{
-    printf("\n No. of elements in stack : %d", count);
-}
-
-/* Push data into stack */
-void push(int data)
+Node push(int ele, Node top)
 {
     if (top == NULL)
     {
-        top =(struct node *)malloc(1*sizeof(struct node));
-        top->ptr = NULL;
-        top->info = data;
+        top =(Node)malloc(sizeof(struct node));
+        top->next = NULL;
+        top->data = ele;
+	return top;
     }
     else
     {
-        temp =(struct node *)malloc(1*sizeof(struct node));
-        temp->ptr = top;
-        temp->info = data;
+        Node temp =(Node)malloc(sizeof(struct node));
+        temp->next = top;
+        temp->data = ele;
         top = temp;
+	return top;
     }
-    count++;
 }
-
-/* Display stack elements */
-void display()
+void display(Node top)
 {
-    top1 = top;
+    Node t = top;
 
-    if (top1 == NULL)
+    if (t == NULL)
     {
         printf("Stack is empty");
         return;
     }
-
-    while (top1 != NULL)
+    printf(" Elements in the stack are:\n");
+    while (t != NULL)
     {
-        printf("%d ", top1->info);
-        top1 = top1->ptr;
+        printf("%d ", t->data);
+        t = t->next;
     }
  }
-
-/* Pop Operation on stack */
-void pop()
+Node pop(Node top)
 {
-    top1 = top;
+    Node t = top;
 
-    if (top1 == NULL)
+    if (t == NULL)
     {
-        printf("\n Error : Trying to pop from empty stack");
-        return;
+        printf("\nStack underflow");
+        return top;
     }
     else
-        top1 = top1->ptr;
-    printf("\n Popped value : %d", top->info);
+        t = t->next;
+    printf("\n Popped element : %d", top->data);
     free(top);
-    top = top1;
-    count--;
+    top = t;
+    return top;
 }
 
-/* Return top element */
-int topelement()
+void main()
 {
-    return(top->info);
+	int no, ch, e;
+	Node top = NULL;
+	while (1)
+	{
+		printf("\n 1.Push\n 2.Pop\n 3.Display\n 4.Exit");
+		printf("\n Enter choice : ");
+		scanf("%d", &ch);
+
+		switch (ch)
+		{
+			case 1:printf(" Enter data : ");
+			       scanf("%d", &no);
+			       top = push(no, top);
+			       break;
+			case 2:top = pop(top);
+			       break;
+			case 3:display(top);
+			       break;
+			case 4:  exit(0);
+			default :printf("Invalid Input");
+				 break;
+		}
+	}	
 }
 
-/* Check if stack is empty or not */
-void empty()
-{
-    if (top == NULL)
-        printf("\n Stack is empty");
-    else
-        printf("\n Stack is not empty with %d elements", count);
-}
 
-/* Destroy entire stack */
-void destroy()
-{
-    top1 = top;
 
-    while (top1 != NULL)
-    {
-        top1 = top->ptr;
-        free(top);
-        top = top1;
-        top1 = top1->ptr;
-    }
-    free(top1);
-    top = NULL;
-
-    printf("\n All stack elements destroyed");
-    count = 0;
-}

@@ -1,150 +1,205 @@
-#include<stdlib.h>
 #include<stdio.h>
-
-struct node{
+#include<stdlib.h>
+struct node
+{
 	int data;
-	struct node* next;
+	struct node *next;
 };
-
-typedef struct node* NODE;
-
-NODE getnode() {
-NODE p;
-p =(NODE) malloc (sizeof(struct node));
-if(p!=NULL)
-return p;
-else
+typedef struct node * NODE;
+NODE insert_front(int item,NODE head);
+void display(NODE head);
+NODE getnode()
 {
-printf("mory allocation failed!\n");
-exit(0);
+	NODE p;
+	p=(NODE)malloc(sizeof(struct node));
+	if(p!=NULL)
+		return p;
+	else
+	{
+		printf("Memory could not be allocated\n");
+		exit(0);
+	}
 }
-}
-
-NODE insert(NODE head,int ele){
-NODE p,q;
-q = getnode();
-q->data=ele;
-q->next = NULL;
-if(head == NULL)
-return q;
-p = head;
-while(p->next!=NULL)
+NODE insert_front(int item,NODE head)
 {
-p = p->next;
+	NODE p;
+	p=getnode();
+	p->data=item;
+	p->next=head;
+	head=p;
+	return head;
 }
-p->next = q;
-}
-
-void sort(NODE head)
-{
-NODE p=head,q=NULL;
-int temp;
-if(head == NULL)
-{
-return;
-}
-while(p->next!=NULL)
-{
-q = p->	next;
-while(q!=NULL)
-{
-if(p->data>q->data)
-{
-temp= p->data;
-p->data = q->data;
-q->data = temp;
-}
-q=q->next;
-}
-p=p->next;
-}
-}
-
-NODE reverse(NODE head)
-{
-NODE curr = head,prev = NULL,nextn = NULL;
-if(head == NULL)
-{
-printf("LIST IS EMPTY!\n");
-return head;
-}
-
-if(head->next ==NULL)
-return head;
-while (curr!=NULL)
-{
-nextn = curr->next;
-curr->next = prev;
-prev = curr;
-curr = nextn;
-}
-head = prev;
-return head;
-}
-
-NODE concatinate(NODE head1, NODE head2)
-{
-NODE temp = head1;
-if (head1 == NULL)
-return head2;
-if(head2 == NULL)
-return head1;
-while(temp->next!=NULL)
-{
-temp = temp->next;
-}
-temp->next=head2;
-return head1;
-}
-
 void display(NODE head)
 {
-NODE p;
-if(head == NULL)
+	NODE p;
+	if(head==NULL)
+	{
+		printf("list is empty\n");
+		exit(0);
+	}
+	p=head;
+	while(p!=NULL)
+	{
+		printf("%d\n",p->data);
+		p=p->next;
+	}
+}
+NODE sort(NODE head)
 {
-printf("LIST IS EMPTY!\n");
-exit(0);
+	NODE p=head;
+	NODE q=NULL;
+	int temp;
+	if(head==NULL)
+		return head;
+	while(p->next!=NULL)
+	{
+		q=p->next;
+		while(q!=NULL)
+		{
+			if(p->data>q->data)
+			{
+				temp=p->data;
+				p->data=q->data;
+				q->data=temp;
+			}
+			q=q->next;
+		}
+		p=p->next;
+	}
+	return head;
 }
-p = head;
-while(p!=NULL)
+NODE reverse(NODE head)
 {
-printf("%d\n",p->data);
-p = p->next;
+	NODE curr=head;
+	NODE prev=NULL;
+	NODE nextn=NULL;
+	if(head==NULL)
+	{
+		printf("list is empty\n");
+		return head;
+	}
+	if(head->next==NULL)
+		return head;
+	while(curr!=NULL)
+	{
+		nextn=curr->next;
+		curr->next=prev;
+		prev=curr;
+		curr=nextn;
+	}
+	head=prev;
+	return head;
 }
+NODE concatenate(NODE h1,NODE h2)
+{
+	NODE p=h1;
+	if(h1==NULL)
+		return h2;
+	if(h2==NULL)
+		return h1;
+	while(p->next!=NULL)
+	{
+		p=p->next;
+	}
+	p->next=h2;
+	return h1;
 }
-
 int main()
 {
-int n,ele,ele1,n1,i,ch;
-NODE head = NULL, head1=NULL;
-while(1){
-printf("1.Insert\n2.Sort\n3.Concatinate\n4.Display\n5.Reverse\n6.Exit\n");
-scanf("%d",&n);
-switch(n)
-{
-case 1: printf("Enter the element:\n");
-	scanf("%d",&ele);
-	head = insert(head,ele);
-	break;
-case 2: sort(head);
-	break;
-case 3: printf("Enter the number of elements in the 2nd list:\n");
-	scanf("%d",&n1);
-	for(i=0;i<n1;i++)
+	NODE head1=NULL;
+	NODE head2=NULL;
+	int ch,item,n,i;
+	printf("enter\n1.Insertion list1\n2.Insertion list2\n3.Sorting in list1\n4.Reversing list1\n5.Sorting list2\n6.Reverseing list2\n7.Concatenate\n8.Display list1\n9.Display list2\n10.exit\n");
+	scanf("%d",&ch);
+	while(ch!=0)
 	{
-	printf("Enter the ele %d:\n",i+1);
-	scanf("%d",&ele1);
-	head1 = insert(head1,ele1);
+		switch(ch)
+		{
+			case 1:printf("enter the no. of elements\n");
+				scanf("%d",&n);
+				printf("enter the items to be inserted\n");
+				for(i=0;i<n;i++)
+				{
+					scanf("%d",&item);
+					head1=insert_front(item,head1);
+				}
+				break;
+			case 2:printf("enter the no. of elements\n");
+				scanf("%d",&n);
+				printf("enter the items to be inserted\n");
+				for(i=0;i<n;i++)
+				{
+					scanf("%d",&item);
+					head2=insert_front(item,head2);
+				}
+				break;
+			case 3:head1=sort(head1);
+				break;
+			case 4:head1=reverse(head1);
+				break;
+			case 5:head2=sort(head2);
+				break;
+			case 6:head2=reverse(head2);
+				break;
+			case 7:head1=concatenate(head1,head2);
+				break;
+			case 8:display(head1);
+				break;
+			case 9:display(head2);
+				break;
+			default:printf("invalid input check for unavailability\n");
+		}
+		printf("enter next choice or '0' to exit\n");
+		scanf("%d",&ch);
 	}
-	head = concatinate(head,head1);
-	break;
-case 4: display(head);
-	break;
-case 5: head= reverse(head);
-	break;
-default: printf("INVALID ENTRY!\n");
+	return 0;
 }
-}
-return 1;
-}
-  
+/*
+enter
+1.Insertion list1
+2.Insertion list2
+3.Sorting in list1
+4.Reversing list1
+5.Sorting list2
+6.Reverseing list2
+7.Concatenate
+8.Display list1
+9.Display list2
+10.exit
+1
+enter the no. of elements
+4
+enter the items to be inserted
+10
+40
+30
+20
+enter next choice or '0' to exit
+3
+enter next choice or '0' to exit
+4
+enter next choice or '0' to exit
+8
+40
+30
+20
+10
+enter next choice or '0' to exit
+2
+enter the no. of elements
+2
+enter the items to be inserted
+50
+60
+enter next choice or '0' to exit
+7
+enter next choice or '0' to exit
+8
+40
+30
+20
+10
+60
+50
+enter next choice or '0' to exit
+*/

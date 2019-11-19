@@ -129,7 +129,7 @@ int main() {
 		NODE p = head;
 		while (p != NULL) {
 			c++;
-			if (c == pos) head=insert_left(head,ele,p);
+			if (c == pos) head=insertleft(head,ele,p);
 			p = p -> next;
 			}
 		break;
